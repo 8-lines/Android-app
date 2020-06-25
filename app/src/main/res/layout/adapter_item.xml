@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:ignore="NestedWeights"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
-        android:text="Имя"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="30sp" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textPier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:text="@string/pier"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:text="@string/full_name"
+            android:textSize="30sp" />
+            <!-- android:textAppearance="?android:attr/textAppearanceMedium" -->
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,30 +36,27 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Пирс"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="дата1"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/status"
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textDate1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:text="дата2"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/date_shortStart"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textDate2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/date_shortFinish"
             android:textSize="30sp" />
     </LinearLayout>
 

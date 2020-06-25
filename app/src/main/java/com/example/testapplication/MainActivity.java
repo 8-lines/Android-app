@@ -1,18 +1,17 @@
 package com.example.testapplication;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,67 +19,82 @@ import java.util.HashMap;
 public class MainActivity extends AppCompatActivity {
 
     final String LOG_TAG = "myLogs";
-
-    Button btnAdd, btnRead, btnClear, btnUpd, btnDel;
+    int int_pier;
+    long row;
+    String name, pier, date_start, date_finish;
+    //Button btnAdd, btnRead, btnClear, btnUpd, btnDel;
     EditText mFullName, mPier, mDateStart, mDateFinish;
-    TextView mListHeader;
     ListView userList;
-    TextView header;
+    //TextView header;
     DB db;
     Cursor userCursor;
-    SimpleCursorAdapter userAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         db = new DB(this);
         db.open();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
+        refresh();
     }
 
     public void onClick(View v) {
 
-        // создаем объект для данных
-        ContentValues cv = new ContentValues();
+        // получаем текущие данные из полей ввода
+        get_data();
 
-        mFullName = (EditText) findViewById(R.id.fullName);
-        mPier = (EditText) findViewById(R.id.pier);
-        mDateStart = (EditText) findViewById(R.id.dateStart);
-        mDateFinish = (EditText) findViewById(R.id.dateFinish);
-
-        // получаем данные из полей ввода
-        String name = mFullName.getText().toString();
-        String pier = mPier.getText().toString();
-        String date_start = mDateStart.getText().toString();
-        String date_finish = mDateFinish.getText().toString();
-        int int_pier;
+        // скрываем клавиатуру
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         switch (v.getId()) {
             case R.id.btnAdd:
                 // вставляем запись c ненулевым ID
-                if (pier == "")
-                    break;
-                else
-                    int_pier = Integer.parseInt(pier);
                 Log.d(LOG_TAG, "--- Insert in mytable: ---");
-                db.addRec(int_pier, name, date_start, date_finish);
-                Log.d(LOG_TAG, "row inserted, ID = " + pier);
+                if (pier.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Ошибка: укажите номер пирса",
+                            Toast.LENGTH_LONG).show();
+                    Log.d(LOG_TAG, "--- Inserting failed, null ID ---");
+                    break;
+                }
+                int_pier = Integer.parseInt(pier);
+                row = db.addRec(int_pier, name, date_start, date_finish);
+                if (row == -1)
+                {
+                    Log.d(LOG_TAG, "--- Inserting failed, incorrect ID ---");
+                    Toast.makeText(getApplicationContext(),"Ошибка: запись уже существует",
+                            Toast.LENGTH_LONG).show();
+                    break;
+                }
+                refresh();
+                Log.d(LOG_TAG, "row inserted, ID = " + row);
+                Toast.makeText(getApplicationContext(), "Запись добавлена",
+                        Toast.LENGTH_LONG).show();
                 break;
             case R.id.btnUpd:
                 // обновляем запись c ненулевым ID
-                if (pier == "")
+                Log.d(LOG_TAG, "--- Update in mytable: ---");
+                if (pier.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Ошибка: укажите номер пирса",
+                            Toast.LENGTH_LONG).show();
+                    Log.d(LOG_TAG, "--- Updating failed, null ID ---");
                     break;
-                else
-                    int_pier = Integer.parseInt(pier);
-                Log.d(LOG_TAG, "--- Update mytable: ---");
-                db.updRec(int_pier, name, date_start, date_finish);
-                Log.d(LOG_TAG, "row updated, ID = " + pier);
+                }
+                int_pier = Integer.parseInt(pier);
+                row = db.updRec(int_pier, name, date_start, date_finish);
+                Log.d(LOG_TAG, "--- Updating ---" + row);
+                if (row == 0)
+                {
+                    Log.d(LOG_TAG, "--- Updating failed, incorrect ID ---");
+                    Toast.makeText(getApplicationContext(),"Ошибка: запись не существует",
+                            Toast.LENGTH_LONG).show();
+                    break;
+                }
+                refresh();
+                Log.d(LOG_TAG, "row updated, ID = " + row);
+                Toast.makeText(getApplicationContext(), "Запись обновлена",
+                        Toast.LENGTH_LONG).show();
                 break;
             case R.id.btnCln:
                 mFullName.setText("");
@@ -88,66 +102,101 @@ public class MainActivity extends AppCompatActivity {
                 mDateStart.setText("");
                 mDateFinish.setText("");
                 break;
-            case R.id.btnLoad:
-                Log.d(LOG_TAG, "--- Updating BD ---");
-                //получаем данные из бд в виде курсора
-                userCursor = db.getAllData();
-                header = (TextView)findViewById(R.id.listHeader);
-                userList = (ListView)findViewById(R.id.listMain);
-
-                // id столбцов
-                final int id_index = userCursor.getColumnIndex("_id");
-                final int name_index = userCursor.getColumnIndex("name");
-                final int date1_index = userCursor.getColumnIndex("date_start");
-                final int date2_index = userCursor.getColumnIndex("date_finish");
-
-                //Список клиентов
-                ArrayList<HashMap<String, Object>> clients = new ArrayList<>();
-                //Список параметров конкретного клиента
-                HashMap<String, Object> client;
-
-                //Пробегаем по всем клиентам
-                try {
-                    System.err.println("Starting!");
-                    userCursor.moveToFirst();
-                    while (!userCursor.isAfterLast()) {
-                        client = new HashMap<>();
-                        final long tId = userCursor.getLong(id_index);
-                        final String tName = userCursor.getString(name_index);
-                        final String tDate1 = userCursor.getString(date1_index);
-                        final String tDate2 = userCursor.getString(date2_index);
-                        client.put("_id", tId);
-                        client.put("name", tName);
-                        client.put("date_start", tDate1);
-                        client.put("date_finish", tDate2);
-
-                        //Закидываем запись в список
-                        clients.add(client);
-
-                        //Переходим к следующему клиенту
-                        userCursor.moveToNext();
-                    }
-                    System.err.println("OK!");
-                } catch (Exception e) { // catch по Exception ПЕРЕХВАТЫВАЕТ RuntimeException
-                    System.err.print("ERROR!");
-                }
-                userCursor.close();
-                String[] from = { "_id", "name", "date_start", "date_finish"};
-                int[] to = { R.id.textView, R.id.textView2, R.id.textView3, R.id.textView4};
-                SimpleAdapter adapter = new SimpleAdapter(this, clients, R.layout.adapter_item, from, to);
-                userList.setAdapter(adapter);
-                Log.d(LOG_TAG, "--- Update finished ---");
-                break;
             case R.id.btnClear:
                 // удаляем все записи
-                Log.d(LOG_TAG, "--- Clear mytable: ---");
-                int cnt = db.delAll();
-                Log.d(LOG_TAG, "--- Mytable cleared " + cnt + " rows ---");
+                // запрашиваем подтверждение
+                FragmentManager manager = getSupportFragmentManager();
+                MyDialogFragment myDialogFragment = new MyDialogFragment();
+                myDialogFragment.show(manager, "myDialog");
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
     }
+
+    // При нажатии "ОК" очищаем таблицу
+    public void okClicked() {
+        Log.d(LOG_TAG, "--- Clear mytable: ---");
+        int cnt = db.delAll();
+        refresh();
+        Toast.makeText(getApplicationContext(), "Удалено " + cnt + " записей",
+                Toast.LENGTH_LONG).show();
+        Log.d(LOG_TAG, "--- Mytable cleared " + cnt + " rows ---");
+    }
+
+    // Или отменяем операцию
+    public void cancelClicked() {
+        Toast.makeText(getApplicationContext(), "Отмена",
+                Toast.LENGTH_LONG).show();
+    }
+
+    // Получаем информацию с заполненных полей
+    public void get_data() {
+        mFullName = findViewById(R.id.fullName);
+        mPier = findViewById(R.id.pier);
+        mDateStart = findViewById(R.id.dateStart);
+        mDateFinish = findViewById(R.id.dateFinish);
+
+        // получаем данные из полей ввода
+        name = mFullName.getText().toString();
+        pier = mPier.getText().toString();
+        date_start = mDateStart.getText().toString();
+        date_finish = mDateFinish.getText().toString();
+    }
+
+    // Обновляем отображаемый список
+    public void refresh(){
+        //получаем данные из бд в виде курсора
+        userCursor = db.getAllData();
+        //header = (TextView)findViewById(R.id.listHeader);
+        userList = findViewById(R.id.listMain);
+
+        // id столбцов
+        final int id_index = userCursor.getColumnIndex("_id");
+        final int status_index = userCursor.getColumnIndex("status");
+        final int name_index = userCursor.getColumnIndex("name");
+        final int date1_index = userCursor.getColumnIndex("date_start");
+        final int date2_index = userCursor.getColumnIndex("date_finish");
+
+        //Список клиентов
+        ArrayList<HashMap<String, Object>> records = new ArrayList<>();
+        //Список параметров конкретного клиента
+        HashMap<String, Object> record;
+
+        //Пробегаем по всем записям
+        try {
+            userCursor.moveToFirst();
+            while (!userCursor.isAfterLast()) {
+                record = new HashMap<>();
+                final long tId = userCursor.getLong(id_index);
+                final String tStatus = userCursor.getString(status_index);
+                final String tName = userCursor.getString(name_index);
+                final String tDate1 = userCursor.getString(date1_index);
+                final String tDate2 = userCursor.getString(date2_index);
+
+                record.put("_id", "Пирс №" + tId);
+                record.put("status", "Статус: " + tStatus);
+                record.put("name", "ФИО: " + tName);
+                record.put("date_start", "С: " + tDate1);
+                record.put("date_finish", "До: " + tDate2);
+
+                //Закидываем запись в список
+                records.add(record);
+
+                //Переходим к следующему клиенту
+                userCursor.moveToNext();
+            }
+        } catch (Exception e) { // catch по Exception ПЕРЕХВАТЫВАЕТ RuntimeException
+            System.err.print("ERROR!");
+        }
+        userCursor.close();
+        String[] from = { "_id", "status", "name", "date_start", "date_finish"};
+        int[] to = { R.id.textPier, R.id.textStatus, R.id.textName, R.id.textDate1, R.id.textDate2};
+        SimpleAdapter adapter = new SimpleAdapter(this, records,
+                R.layout.adapter_item, from, to);
+        userList.setAdapter(adapter);
+    }
+
 
     @Override
     public void onDestroy(){

@@ -14,9 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="320dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,6 +34,7 @@
             android:ems="10"
             android:hint="@string/full_name"
             android:importantForAutofill="no"
+            android:imeOptions="actionDone"
             android:inputType="textPersonName" />
 
         <EditText
@@ -45,6 +44,7 @@
             android:ems="10"
             android:hint="@string/pier"
             android:importantForAutofill="no"
+            android:imeOptions="actionDone"
             android:inputType="date" />
 
         <EditText
@@ -54,6 +54,7 @@
             android:ems="10"
             android:hint="@string/date_start"
             android:importantForAutofill="no"
+            android:imeOptions="actionDone"
             android:inputType="datetime" />
 
         <EditText
@@ -63,6 +64,7 @@
             android:ems="10"
             android:hint="@string/date_finish"
             android:importantForAutofill="no"
+            android:imeOptions="actionDone"
             android:inputType="datetime" />
 
         <LinearLayout
@@ -96,25 +98,20 @@
 
         </LinearLayout>
 
-        <Button
+        <!-- <Button
             android:id="@+id/btnLoad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClick"
-            android:text="@string/list_load" />
+            android:text="@string/list_load" /> -->
 
-        <TextView
+        <!-- <TextView
             android:id="@+id/listHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/list_curr"
             android:textAlignment="center"
-            android:textSize="24sp" />
-
-        <ListView
-            android:id="@+id/listMain"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:textSize="24sp" /> -->
 
         <Button
             android:id="@+id/btnClear"
@@ -122,6 +119,14 @@
             android:layout_height="wrap_content"
             android:onClick="onClick"
             android:text="@string/list_clear" />
+
+        <ListView
+            android:id="@+id/listMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+        </ListView>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
