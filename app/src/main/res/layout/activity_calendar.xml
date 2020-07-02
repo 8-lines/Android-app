@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_calendar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    tools:context=".CalendarActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteY="338dp"
+            android:weightSum="100">
+
+            <TextView
+                android:id="@+id/chosenDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:text="@string/chosen_date"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/currDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btnCont"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="20"
+                android:text="@string/btn_cont"
+                android:onClick="onClick"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#2196F3"
+            android:dateTextAppearance="@android:style/TextAppearance.Large"
+            android:firstDayOfWeek="2"
+            android:minDate="01/01/2020"
+            android:weekDayTextAppearance="@style/CalendarWeeks" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,83 +27,117 @@
             android:textAlignment="center"
             android:textSize="30sp" />
 
-        <EditText
-            android:id="@+id/fullName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/full_name"
-            android:importantForAutofill="no"
-            android:imeOptions="actionDone"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/pier"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/pier"
-            android:importantForAutofill="no"
-            android:imeOptions="actionDone"
-            android:inputType="date" />
-
-        <EditText
-            android:id="@+id/dateStart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/date_start"
-            android:importantForAutofill="no"
-            android:imeOptions="actionDone"
-            android:inputType="datetime" />
-
-        <EditText
-            android:id="@+id/dateFinish"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/date_finish"
-            android:importantForAutofill="no"
-            android:imeOptions="actionDone"
-            android:inputType="datetime" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnAdd"
+            <EditText
+                android:id="@+id/pier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:text="@string/btn_add" />
+                android:ems="10"
+                android:hint="@string/pier"
+                android:imeOptions="actionDone"
+                android:importantForAutofill="no"
+                android:inputType="date" />
 
-            <Button
-                android:id="@+id/btnUpd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:text="@string/btn_upd" />
+            <!--  <Button
+                 android:id="@+id/btnBack"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:onClick="onClick"
+                 android:text="@string/btn_back" /> -->
+         </LinearLayout>
 
-            <Button
-                android:id="@+id/btnCln"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onClick"
-                android:text="@string/btn_cln" />
+         <EditText
+             android:id="@+id/fullName"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:hint="@string/full_name"
+             android:importantForAutofill="no"
+             android:imeOptions="actionDone"
+             android:inputType="textPersonName" />
 
-        </LinearLayout>
+         <EditText
+             android:id="@+id/dateStart"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:hint="@string/date_start"
+             android:importantForAutofill="no"
+             android:imeOptions="actionDone"
+             android:inputType="datetime" />
 
-        <!-- <Button
-            android:id="@+id/btnLoad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="@string/list_load" /> -->
+         <EditText
+             android:id="@+id/dateFinish"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:hint="@string/date_finish"
+             android:importantForAutofill="no"
+             android:imeOptions="actionDone"
+             android:inputType="datetime" />
+
+         <EditText
+             android:id="@+id/timeStart"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:hint="@string/time_start"
+             android:importantForAutofill="no"
+             android:imeOptions="actionDone"
+             android:inputType="datetime" />
+
+         <EditText
+             android:id="@+id/timeFinish"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:ems="10"
+             android:hint="@string/time_finish"
+             android:importantForAutofill="no"
+             android:imeOptions="actionDone"
+             android:inputType="datetime" />
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal">
+
+             <Button
+                 android:id="@+id/btnAdd"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:onClick="onClick"
+                 android:text="@string/btn_add" />
+
+             <Button
+                 android:id="@+id/btnUpd"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:onClick="onClick"
+                 android:text="@string/btn_upd" />
+
+             <Button
+                 android:id="@+id/btnCln"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:onClick="onClick"
+                 android:text="@string/btn_cln" />
+
+         </LinearLayout>
+
+         <!-- <Button
+             android:id="@+id/btnLoad"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:onClick="onClick"
+             android:text="@string/list_load" /> -->
 
         <!-- <TextView
             android:id="@+id/listHeader"

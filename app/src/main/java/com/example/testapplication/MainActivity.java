@@ -1,5 +1,6 @@
 package com.example.testapplication;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
     final String LOG_TAG = "myLogs";
     int int_pier;
     long row;
+    EditText mPier, mFullName, mDateStart, mDateFinish;
     String name, pier, date_start, date_finish;
     //Button btnAdd, btnRead, btnClear, btnUpd, btnDel;
-    EditText mFullName, mPier, mDateStart, mDateFinish;
     ListView userList;
     //TextView header;
     DB db;
@@ -34,10 +35,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mPier = findViewById(R.id.pier);
+        mFullName = findViewById(R.id.fullName);
+        mDateStart = findViewById(R.id.dateStart);
+        mDateFinish = findViewById(R.id.dateFinish);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         db = new DB(this);
         db.open();
         refresh();
+
+        Intent intent = getIntent();
+        String cDate = intent.getStringExtra("cDate");
+        mDateStart.setText(cDate);
     }
 
     public void onClick(View v) {
@@ -109,6 +119,9 @@ public class MainActivity extends AppCompatActivity {
                 MyDialogFragment myDialogFragment = new MyDialogFragment();
                 myDialogFragment.show(manager, "myDialog");
                 break;
+            /*case R.id.btnBack:
+                // возвращаемся назад
+                break; */
             default:
                 throw new IllegalStateException("Unexpected value: " + v.getId());
         }
@@ -132,14 +145,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Получаем информацию с заполненных полей
     public void get_data() {
-        mFullName = findViewById(R.id.fullName);
-        mPier = findViewById(R.id.pier);
-        mDateStart = findViewById(R.id.dateStart);
-        mDateFinish = findViewById(R.id.dateFinish);
-
         // получаем данные из полей ввода
-        name = mFullName.getText().toString();
         pier = mPier.getText().toString();
+        name = mFullName.getText().toString();
         date_start = mDateStart.getText().toString();
         date_finish = mDateFinish.getText().toString();
     }

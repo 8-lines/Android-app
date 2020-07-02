@@ -7,8 +7,10 @@
     <string name="full_name">ФИО</string>
     <string name="pier">Пирс</string>
     <string name="status">Статус</string>
-    <string name="date_start">Дата и время начала</string>
-    <string name="date_finish">Дата и время завершения</string>
+    <string name="date_start">Дата начала</string>
+    <string name="date_finish">Дата завершения</string>
+    <string name="time_start">Время начала</string>
+    <string name="time_finish">Время завершения</string>
     <string name="date_shortStart">Дата1</string>
     <string name="date_shortFinish">Дата2</string>
     <string name="list_load">Загрузить список</string>
@@ -18,6 +20,10 @@
     <string name="dialog_question">Вы действительно хотите очистить список?</string>
     <string name="dialog_yes">Подтвердить</string>
     <string name="dialog_no">Отмена</string>
+
+    <string name="chosen_date">" "Выбранная дата:</string>
+    <string name="btn_cont">Далее</string>
+    <string name="btn_back">Назад</string>
 
 
 </resources>
