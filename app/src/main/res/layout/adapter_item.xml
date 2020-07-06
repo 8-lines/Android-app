@@ -15,10 +15,19 @@
 
         <TextView
             android:id="@+id/textName"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:text="@string/full_name"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_weight="9"
+            android:text="@string/cln_id"
             android:textSize="30sp" />
 
         <!-- <TextView
@@ -45,15 +54,6 @@
             android:layout_weight="1"
             android:text="@string/date"
             android:textSize="30sp" /> -->
-
-        <TextView
-            android:id="@+id/textID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
-            android:layout_weight="1"
-            android:text="@string/cln_id"
-            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/textTime1"

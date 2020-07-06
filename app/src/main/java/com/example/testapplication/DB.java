@@ -111,17 +111,26 @@ public class DB {
 
     // удалить все записи из DB_TABLE
     public int delAll() {
+        String tDate, tName, tTime1, tTime2;
+        int tPier = 5;
         int clearCount = mDB.delete(DB_TABLE, null, null);
         mDB.execSQL("DROP TABLE mytable;");
         mDB.execSQL(DB_CREATE);
+
         ContentValues cv = new ContentValues();
-        for (int i = 1; i < 6; i++) {
-            cv.put(COLUMN_ID, i);
-            cv.put(COLUMN_PIER, i);
-            cv.put(COLUMN_DATE, "08/08/2020");
-            cv.put(COLUMN_NAME, "-");
-            cv.put(COLUMN_TIME1, "-");
-            cv.put(COLUMN_TIME2, "-");
+        tDate = "06/06/2020";
+        tName = "Иванов Иван Иванович";
+        for (int i = 1; i < 8; i++) {
+            if ((i == 4) || (i == 6))
+                tPier = i;
+            tTime1 = (11 + i) + ":00";
+            tTime2 = (12 + i) + ":00";
+
+            cv.put(COLUMN_PIER, tPier);
+            cv.put(COLUMN_DATE, tDate);
+            cv.put(COLUMN_NAME, tName);
+            cv.put(COLUMN_TIME1, tTime1);
+            cv.put(COLUMN_TIME2, tTime2);
             mDB.insert(DB_TABLE, null, cv);
         }
         return clearCount;
@@ -144,14 +153,24 @@ public class DB {
             // создаем таблицу с полями
             db.execSQL(DB_CREATE);
             // добавление начальных данных
+            String tDate, tName, tTime1, tTime2;
+            int tPier;
             ContentValues cv = new ContentValues();
-            for (int i = 1; i < 6; i++) {
-                cv.put(COLUMN_ID, i);
-                cv.put(COLUMN_PIER, i);
-                cv.put(COLUMN_DATE, "08/08/2020");
-                cv.put(COLUMN_NAME, "-");
-                cv.put(COLUMN_TIME1, "-");
-                cv.put(COLUMN_TIME2, "-");
+            tDate = "06/06/2020";
+            tName = "Иванов Иван Иванович";
+            for (int i = 1; i < 9; i++) {
+                if ((i == 4) || (i == 6))
+                    tPier = i;
+                else
+                    tPier = 5;
+                tTime1 = (11+i) + ":00";
+                tTime2 = (12+i) + ":00";
+
+                cv.put(COLUMN_PIER, tPier);
+                cv.put(COLUMN_DATE, tDate);
+                cv.put(COLUMN_NAME, tName);
+                cv.put(COLUMN_TIME1, tTime1);
+                cv.put(COLUMN_TIME2, tTime2);
                 db.insert(DB_TABLE, null, cv);
             }
         }

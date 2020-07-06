@@ -7,15 +7,15 @@
     <string name="btn_rm">Удалить запись</string>
 
     <string name="cln_id">ID: </string>
-    <string name="rec_id">ID (при обновлении)</string>
+    <string name="rec_id">ID (при обновлении или удалении)</string>
     <string name="full_name">ФИО</string>
     <string name="pier">Пирс</string>
     <string name="date">Дата - DD/MM/YYYY </string>
     <string name="date_short">Дата</string>
     <string name="date_start">Дата начала</string>
     <string name="date_finish">Дата завершения</string>
-    <string name="time_start">Время начала (чч:мм)</string>
-    <string name="time_finish">Время завершения (чч:мм)</string>
+    <string name="time_start">Время нач. (чч:мм)</string>
+    <string name="time_finish">Время зав. (чч:мм)</string>
 
     <string name="time_shortStart">Время1</string>
     <string name="time_shortFinish">Время2</string>

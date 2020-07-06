@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mPier.setText(tmpPier);
         mDate.setText(tmpDate);
 
+        mFullName.requestFocus();
 
         //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         db = new DB(this);
@@ -118,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 refresh();
                 Toast.makeText(getApplicationContext(), "Запись добавлена",
                         Toast.LENGTH_LONG).show();
+                // очищаем поля
+                clear_fields();
                 break;
 
             case R.id.btnUpd:
@@ -134,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 int_pier = Integer.parseInt(cPier);
                 rec_id = Integer.parseInt(str_id);
                 row = db.updRec(rec_id, int_pier, cDate, name, time_start, time_finish);
-                Log.d(LOG_TAG, "--- Updating ---" + row);
+                Log.d(LOG_TAG, "--- Updating ---");
                 if (row == 0)
                 {
                     Log.d(LOG_TAG, "--- Updating failed, incorrect ID ---");
@@ -151,12 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.btnCln:
                 // очищаем поля
-                mID.setText("");
-                //mPier.setText("");
-                //mDate.setText("");
-                mFullName.setText("");
-                mTimeStart.setText("");
-                mTimeFinish.setText("");
+                clear_fields();
                 break;
 
             /* case R.id.btnClear:
@@ -179,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 rec_id = Integer.parseInt(str_id);
                 row = db.delRec(rec_id);
-                Log.d(LOG_TAG, "--- Deleting --- " + row);
+                Log.d(LOG_TAG, "--- Deleting --- ");
                 if (row == 0)
                 {
                     Log.d(LOG_TAG, "--- Deleting failed, incorrect ID ---");
@@ -212,6 +210,15 @@ public class MainActivity extends AppCompatActivity {
     public void cancelClicked() {
         Toast.makeText(getApplicationContext(), "Отмена",
                 Toast.LENGTH_LONG).show();
+    }
+
+    public void clear_fields() {
+        mID.setText("");
+        //mPier.setText("");
+        //mDate.setText("");
+        mFullName.setText("");
+        mTimeStart.setText("");
+        mTimeFinish.setText("");
     }
 
     // Получаем информацию с заполненных полей
@@ -280,12 +287,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void copyRec(String str) {
-        String[] parts = str.split(", ");
-        String time2 = parts[1].split(" ")[1];
-        String time1 = parts[2].split(" ")[1];
-        String id = parts[4].split(" ")[1];
-        String tmp = parts[5].split(": ")[1];
-        String name = tmp.substring(0, tmp.length() - 1);
+        String tmp, time1, time2, id, name;
+        tmp = str.split("start=")[1].split(",")[0];
+        time1 = tmp.substring(3);
+        tmp = str.split("finish=")[1].split(",")[0];
+        time2 = tmp.substring(4);
+        id = str.split("ID: ")[1].split(",")[0];
+        tmp = str.split("name=")[1].substring(5);
+        if (tmp.contains(", "))
+            name = tmp.split(", ")[0];
+        else
+            name = tmp.substring(0, tmp.length()-1);
         mID.setText(id);
         mFullName.setText(name);
         mTimeStart.setText(time1);
@@ -293,18 +305,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean isCurrDay(String time1, String time2) {
+        if (time1.equals("-") || time2.equals("-"))
+            return true;
+
         int hour1 = Integer.parseInt(time1.split(":")[0]);
         int min1 = Integer.parseInt(time1.split(":")[1]);
         int hour2 = Integer.parseInt(time2.split(":")[0]);
         int min2 = Integer.parseInt(time2.split(":")[1]);
 
         // если следующий день
-        if ((hour1 > hour2) || (hour1 == hour2 && min1 >= min2)) {
-            Log.d(LOG_TAG, "--- NextDay --- " + hour1 + "" + hour2);
-            return false;
-        }
-        Log.d(LOG_TAG, "--- CurrDay ---");
-        return true;
+        //Log.d(LOG_TAG, "--- NextDay --- " + hour1 + "" + hour2);
+        return (hour1 <= hour2) && (hour1 != hour2 || min1 < min2);
+        //Log.d(LOG_TAG, "--- CurrDay ---");
     }
 
     public String nextDate(String date) throws ParseException {

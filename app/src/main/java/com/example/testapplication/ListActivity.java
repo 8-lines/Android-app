@@ -121,7 +121,7 @@ public class ListActivity extends AppCompatActivity {
                     itemView.setBackgroundColor(Color.GREEN);
                 if (nmb > 0 && nmb < 6)
                     itemView.setBackgroundColor(Color.YELLOW);
-                if (nmb > 6)
+                if (nmb >= 6)
                     itemView.setBackgroundColor(Color.RED);
 
                 return itemView;
@@ -135,8 +135,11 @@ public class ListActivity extends AppCompatActivity {
 
     public int counter(String str)
     {
-        String[] parts = ((str.split(","))[0].split(" "));
-        String number = parts[1];
+        //Log.d(LOG_TAG, "--- Str: " + str);
+        String[] parts = str.split(": ");
+        String tmp = parts[1];
+        String number = tmp.substring(0, 1);
+        //Log.d(LOG_TAG, "--- Number: " + number);
         return Integer.parseInt(number);
     }
 
