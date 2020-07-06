@@ -10,24 +10,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
+
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/full_name"
+            android:textSize="30sp" />
+
+        <!-- <TextView
             android:id="@+id/textPier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="10"
+            android:layout_weight="1"
             android:text="@string/pier"
-            android:textSize="30sp" />
+            android:textSize="30sp" /> -->
 
-        <TextView
-            android:id="@+id/textName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="10"
-            android:text="@string/full_name"
-            android:textSize="30sp" />
-            <!-- android:textAppearance="?android:attr/textAppearanceMedium" -->
+        <!-- android:textAppearance="?android:attr/textAppearanceMedium" -->
     </LinearLayout>
 
     <LinearLayout
@@ -35,28 +37,38 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textStatus"
+        <!-- <TextView
+            android:id="@+id/textDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="@string/status"
+            android:layout_gravity="top|end"
+            android:layout_weight="1"
+            android:text="@string/date"
+            android:textSize="30sp" /> -->
+
+        <TextView
+            android:id="@+id/textID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:layout_weight="1"
+            android:text="@string/cln_id"
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/textDate1"
-            android:layout_width="wrap_content"
+            android:id="@+id/textTime1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="@string/date_shortStart"
+            android:layout_weight="1"
+            android:text="@string/time_shortStart"
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/textDate2"
-            android:layout_width="wrap_content"
+            android:id="@+id/textTime2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="@string/date_shortFinish"
+            android:layout_weight="1"
+            android:text="@string/time_shortFinish"
             android:textSize="30sp" />
     </LinearLayout>
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DecimalFormat;
@@ -26,20 +27,21 @@ public class CalendarActivity extends AppCompatActivity {
         final CalendarView cv = findViewById(R.id.calendarView);
 
         // получаем текущую дату
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf =
+                new SimpleDateFormat("dd/MM/yyyy");
         final String currDate = sdf.format(cv.getDate());
         mDateText.setText(currDate);
         tempDateText = currDate;
 
         final NumberFormat formatter = new DecimalFormat("00");
-        String s = formatter.format(1); // ----> 01
+
 
         cv.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
             String date = currDate;
 
             @Override
-            public void onSelectedDayChange(CalendarView view, int year,
+            public void onSelectedDayChange(@NonNull CalendarView view, int year,
                                             int month, int dayOfMonth) {
 
                 //String mYear = String.valueOf(year);
@@ -47,8 +49,7 @@ public class CalendarActivity extends AppCompatActivity {
                 String mMonth = formatter.format(month+1);
                 String mDay = formatter.format(dayOfMonth);
 
-                String selectedDate = new StringBuilder().append(mDay)
-                        .append("/").append(mMonth).append("/").append(mYear).toString();
+                String selectedDate = mDay + "/" + mMonth + "/" + mYear;
 
                 if (!date.equals(selectedDate)) {
                     date = selectedDate;
@@ -61,7 +62,7 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     public void onClick(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra("cDate", tempDateText);
         startActivity(intent);
     }

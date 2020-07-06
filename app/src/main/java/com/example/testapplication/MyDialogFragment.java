@@ -15,7 +15,7 @@ public class MyDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage("Все записи из таблицы будут удалены.")
-                .setIcon(R.drawable.warning)
+                //.setIcon(R.drawable.warning)
                 .setTitle("Внимание!")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

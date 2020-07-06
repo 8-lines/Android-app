@@ -3,16 +3,22 @@
     <string name="app_name">Приложение</string>
     <string name="btn_add">Добавить запись</string>
     <string name="btn_upd">Обновить запись</string>
-    <string name="btn_cln">Очистить запись</string>
+    <string name="btn_cln">Очистить поля</string>
+    <string name="btn_rm">Удалить запись</string>
+
+    <string name="cln_id">ID: </string>
+    <string name="rec_id">ID (при обновлении)</string>
     <string name="full_name">ФИО</string>
     <string name="pier">Пирс</string>
-    <string name="status">Статус</string>
+    <string name="date">Дата - DD/MM/YYYY </string>
+    <string name="date_short">Дата</string>
     <string name="date_start">Дата начала</string>
     <string name="date_finish">Дата завершения</string>
-    <string name="time_start">Время начала</string>
-    <string name="time_finish">Время завершения</string>
-    <string name="date_shortStart">Дата1</string>
-    <string name="date_shortFinish">Дата2</string>
+    <string name="time_start">Время начала (чч:мм)</string>
+    <string name="time_finish">Время завершения (чч:мм)</string>
+
+    <string name="time_shortStart">Время1</string>
+    <string name="time_shortFinish">Время2</string>
     <string name="list_load">Загрузить список</string>
     <string name="list_clear">Очистить список</string>
     <string name="list_curr">Текущий список</string>

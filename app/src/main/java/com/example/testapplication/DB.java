@@ -17,18 +17,20 @@ public class DB {
 
     // названия столбцов
     public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_STATUS = "status";
+    public static final String COLUMN_PIER = "pier";
+    public static final String COLUMN_DATE = "date";
     public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_DATE1 = "date_start";
-    public static final String COLUMN_DATE2 = "date_finish";
+    public static final String COLUMN_TIME1 = "time_start";
+    public static final String COLUMN_TIME2 = "time_finish";
 
     // команда создания БД
     public static final String DB_CREATE = "CREATE TABLE mytable ("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_STATUS + " TEXT, "
+            + COLUMN_PIER + " INTEGER, "
+            + COLUMN_DATE + " TEXT, "
             + COLUMN_NAME + " TEXT, "
-            + COLUMN_DATE1 + " TEXT, "
-            + COLUMN_DATE2 + " TEXT);";
+            + COLUMN_TIME1 + " TEXT, "
+            + COLUMN_TIME2 + " TEXT);";
 
     private final Context mCtx;
 
@@ -51,57 +53,61 @@ public class DB {
     }
 
     // получить все данные из таблицы DB_TABLE
-    public Cursor getAllData() {
+   /* public Cursor getAllData() {
         return mDB.query(DB_TABLE, null, null, null, null, null, null);
+    }*/
+
+    // получить данные из таблицы DB_TABLE за один день
+    public Cursor getDayData(String currDate) {
+        String selection = "date = ?";
+        String[] selectionArgs = new String[] { currDate };
+        return mDB.query(DB_TABLE, null, selection, selectionArgs, null, null, null, null);
     }
 
+    public Cursor getDayPierData(String currPier, String currDate) {
+        String selection = "date = ? AND pier = ?";
+        String[] selectionArgs = new String[] { currDate, currPier };
+        String orderBy = "time_start";
+        return mDB.query(DB_TABLE, null, selection, selectionArgs, null, null, orderBy, null);
+    }
+
+
     // добавить запись в DB_TABLE
-    public long addRec(int id, String name, String date1, String date2) {
+    public long addRec(int pier, String date, String name, String time1, String time2) {
         ContentValues cv = new ContentValues();
-        String status = "Занято";
-        // если нет ФИО, то свободно
-        if (name.equals("")) {
-            name = "-";
-            status = "Свободно";
-        }
-        if (date1.equals(""))
-            date1 = "-";
-        if (date2.equals(""))
-            date2 = "-";
-        cv.put(COLUMN_ID, id);
-        cv.put(COLUMN_STATUS, status);
+        cv.put(COLUMN_PIER, pier);
+        cv.put(COLUMN_DATE, date);
         cv.put(COLUMN_NAME, name);
-        cv.put(COLUMN_DATE1, date1);
-        cv.put(COLUMN_DATE2, date2);
+        cv.put(COLUMN_TIME1, time1);
+        cv.put(COLUMN_TIME2, time2);
         return mDB.insert(DB_TABLE, null, cv);
     }
 
     // обновить запись в DB_TABLE по ID
-    public long updRec(int id, String name, String date1, String date2) {
+    public long updRec(int id, int pier, String date, String name, String time1, String time2) {
         ContentValues cv = new ContentValues();
-        String status = "Занято";
         if (name.equals("")) {
             name = "-";
-            status = "Свободно";
         }
-        if (date1.equals(""))
-            date1 = "-";
-        if (date2.equals(""))
-            date2 = "-";
+        if (time1.equals(""))
+            time1 = "-";
+        if (time2.equals(""))
+            time2 = "-";
         cv.put(COLUMN_ID, id);
-        cv.put(COLUMN_STATUS, status);
+        cv.put(COLUMN_PIER, pier);
+        cv.put(COLUMN_DATE, date);
         cv.put(COLUMN_NAME, name);
-        cv.put(COLUMN_DATE1, date1);
-        cv.put(COLUMN_DATE2, date2);
+        cv.put(COLUMN_TIME1, time1);
+        cv.put(COLUMN_TIME2, time2);
         return mDB.update(DB_TABLE, cv, "_id = ?",
                 new String[] { Integer.toString(id) });
     }
 
 
     // удалить запись из DB_TABLE по ID
-    /* public void delRec(long id) {
-        mDB.delete(DB_TABLE, COLUMN_ID + " = " + id, null);
-    } */
+     public int delRec(int id) {
+        return mDB.delete(DB_TABLE, COLUMN_ID + " = " + id, null);
+    }
 
     // удалить все записи из DB_TABLE
     public int delAll() {
@@ -111,14 +117,16 @@ public class DB {
         ContentValues cv = new ContentValues();
         for (int i = 1; i < 6; i++) {
             cv.put(COLUMN_ID, i);
-            cv.put(COLUMN_STATUS, "Свободно");
+            cv.put(COLUMN_PIER, i);
+            cv.put(COLUMN_DATE, "08/08/2020");
             cv.put(COLUMN_NAME, "-");
-            cv.put(COLUMN_DATE1, "-");
-            cv.put(COLUMN_DATE2, "-");
+            cv.put(COLUMN_TIME1, "-");
+            cv.put(COLUMN_TIME2, "-");
             mDB.insert(DB_TABLE, null, cv);
         }
         return clearCount;
     }
+
 
     // класс по созданию и управлению БД
     private static class DBHelper extends SQLiteOpenHelper {
@@ -139,10 +147,11 @@ public class DB {
             ContentValues cv = new ContentValues();
             for (int i = 1; i < 6; i++) {
                 cv.put(COLUMN_ID, i);
-                cv.put(COLUMN_STATUS, "Свободно");
+                cv.put(COLUMN_PIER, i);
+                cv.put(COLUMN_DATE, "08/08/2020");
                 cv.put(COLUMN_NAME, "-");
-                cv.put(COLUMN_DATE1, "-");
-                cv.put(COLUMN_DATE2, "-");
+                cv.put(COLUMN_TIME1, "-");
+                cv.put(COLUMN_TIME2, "-");
                 db.insert(DB_TABLE, null, cv);
             }
         }
